@@ -1,0 +1,68 @@
+;-------------------------------------------------------------------------------
+; plugin.def - HSP development environment plugin definition file
+;-------------------------------------------------------------------------------
+;
+; Copyright(c) 2011 sharkpp All rights reserved.
+;
+; The MIT License
+;
+; Permission is hereby granted, free of charge, to any person obtaining a copy
+; of this software and associated documentation files (the "Software"), to deal
+; in the Software without restriction, including without limitation the rights
+; to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+; copies of the Software, and to permit persons to whom the Software is
+; furnished to do so, subject to the following conditions:
+;
+; The above copyright notice and this permission notice shall be included in
+; all copies or substantial portions of the Software.
+;
+; THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+; IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+; FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+; AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+; LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+; OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+; THE SOFTWARE.
+;
+;-------------------------------------------------------------------------------
+;プラグイン定義ファイルv1
+[Plugin]
+Id=net.sharkpp.sakura.plugin.hspde
+Name=HSP開発環境
+Description=Hot Soup Processer の開発をサポートするプラグイン
+Type=wsh
+Author=sharkpp
+Version=
+Url=
+
+[Plug]
+Outline=js\outline.js
+Outline.Label=HSP(label/deffunc)
+
+[Wsh]
+UseCache=0
+
+[Command]
+;
+C[1]=js\compile_and_run.js
+C[1].Label=コンパイル＆実行
+C[1].Icon=ico\compile_and_run.bmp
+;
+C[2]=js\make_object.js
+C[2].Label=オブジェクトファイル作成
+C[2].Icon=ico\make_object.bmp
+;
+C[3]=js\make_exe.js
+C[3].Label=実行ファイル作成
+C[3].Icon=ico\make_exe.bmp
+;
+C[4]=js\search_keyword.js
+C[4].Label=キーワードヘルプ
+C[4].Icon=ico\search_keyword.bmp
+
+[Option]
+O[1].Section=HSPde
+O[1].Key=Path
+O[1].Label=HSPインストールフォルダ
+O[1].Type=Str
+
