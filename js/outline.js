@@ -33,6 +33,7 @@ Outline.SetTitle(Plugin.GetDef("Plug", "Outline.Label"));
 // アウトライン解析処理
 var lineNum = Editor.GetLineCount(0);
 var module = "";
+var nonameModule = 0;
 var depth = 0;
 for(var lineNo = 1; lineNo <= lineNum; lineNo++) {
 	var lineData = Editor.GetLineStr(lineNo);
@@ -55,9 +56,15 @@ for(var lineNo = 1; lineNo <= lineNum; lineNo++) {
 	} else
 	// モジュール開始
 	if( lineData.match(/^(\s*(#module)\s+)"([^\s,.:;\/()=0-9][^\s,.:;\/]*)"/) ||
-		lineData.match(/^(\s*(#module)\s+)([^\s,.:;\/()=0-9][^\s,.:;\/]*)/) )
+		lineData.match(/^(\s*(#module)\s+)([^\s,.:;\/()=0-9][^\s,.:;\/]*)/) ||
+		lineData.match(/^(\s*(#module))/) )
 	{
-		module = (RegExp.$3 ? RegExp.$3 : "");
+		if( RegExp.$3 ) {
+			module = RegExp.$3;
+		} else { // 無名モジュールに仮の名前を付ける
+			module = "m" + nonameModule;
+			nonameModule++;
+		}
 	//	module = RegExp.$2 + " " + (RegExp.$3 ? RegExp.$3 : "");
 		Outline.AddFuncInfo2(lineNo, RegExp.$1.length + 1, module, 0);
 		depth = 1;
@@ -65,8 +72,9 @@ for(var lineNo = 1; lineNo <= lineNum; lineNo++) {
 	// モジュール終了
 	if( lineData.match(/^(\s*)(#global).*/) )
 	{
-		Outline.AddFuncInfo2(lineNo, RegExp.$1.length + 1, RegExp.$2, 1);
+		// 移動時のみ機能しコピーはされない用にする
+		Outline.AddFuncInfo2(lineNo, RegExp.$1.length + 1, RegExp.$2, 1 | 0x10000);
 		module = "";
-		depth = 0;
+		depth  = 0;
 	}
 }
